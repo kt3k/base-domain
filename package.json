@@ -20,7 +20,9 @@
     "test": "gulp build && DIST=1 npm run mocha && npm run uglify-js-test && npm run generate-entry-test && npm run wp",
     "uglify-js-test": "rm -rf test/uglify-js/build && gulp uglify-test && node test/uglify-js/build/index.js",
     "generate-entry-test": "test/generate-entry/test.sh",
-    "wp": "webpack --config webpack-test/webpack.config.js"
+    "wp": "webpack --config webpack-test/webpack.config.js",
+    "cov": "nyc --reporter=lcovonly npm run mocha",
+    "codecov": "npm run cov && codecov"
   },
   "engines": {
     "node": ">=0.12"
@@ -48,6 +50,7 @@
     "deep-eql": "^0.1.3"
   },
   "devDependencies": {
+    "codecov": "^1.0.1",
     "coffee-script": "^1.8.0",
     "espower-coffee": "^1.0.0",
     "gulp": "^3.9.1",
@@ -56,7 +59,17 @@
     "gulp-yuidoc": "^0.1.2",
     "mocha": "^2.3.3",
     "node-circleci-autorelease": "^2.1.7",
+    "nyc": "^8.1.0",
     "power-assert": "^1.1.0",
     "webpack": "^1.13.1"
+  },
+  "nyc": {
+    "extension": [
+      ".coffee"
+    ],
+    "exclude": [
+      "node_modules/**/*",
+      "spec/**/*"
+    ]
   }
 }
